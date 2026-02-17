@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Великая Империя Форкотск</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #E8750A;
+  --orange-dark: #B85A00;
+  --orange-light: #FF9A3C;
+  --orange-glow: rgba(232, 117, 10, 0.3);
+  --cream: #F5ECD7;
+  --cream-dim: rgba(245, 236, 215, 0.7);
+  --dark: #0D0A05;
+  --dark2: #1A1208;
+  --dark3: #241A0A;
+  --white: #FFFBF0;
+  --gold: #D4A843;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: var(--cream);
+  font-family: 'Crimson Text', serif;
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230D0A05'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%23ffffff' opacity='0.015'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23ffffff' opacity='0.01'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ══════════════════════════════
+   НАВИГАЦИЯ
+══════════════════════════════ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  background: linear-gradient(to bottom, rgba(13,10,5,0.97), rgba(13,10,5,0.85));
+  border-bottom: 1px solid rgba(232,117,10,0.25);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 64px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.nav-logo-icon {
+  font-size: 28px;
+  filter: drop-shadow(0 0 8px var(--orange));
+}
+
+.nav-logo-text {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--orange-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+}
+
+.nav-links a {
+  display: block;
+  padding: 8px 14px;
+  color: var(--cream-dim);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--orange-light);
+  background: rgba(232,117,10,0.1);
+}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 80px 20px 60px;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,117,10,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 20% 100%, rgba(180,80,0,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 80% at 80% 100%, rgba(180,80,0,0.12) 0%, transparent 50%),
+    var(--dark);
+}
+
+/* Декоративные полосы */
+.hero-stripe {
+  position: absolute;
+  left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--orange), transparent);
+  opacity: 0.4;
+}
+.hero-stripe.top { top: 80px; }
+.hero-stripe.bot { bottom: 60px; }
+
+.hero-emblem {
+  position: relative;
+  font-size: clamp(80px, 15vw, 160px);
+  line-height: 1;
+  filter: drop-shadow(0 0 40px rgba(232,117,10,0.5));
+  animation: emblemPulse 4s ease-in-out infinite;
+  margin-bottom: 30px;
+  z-index: 2;
+}
+
+@keyframes emblemPulse {
+  0%,100% { filter: drop-shadow(0 0 30px rgba(232,117,10,0.4)); }
+  50% { filter: drop-shadow(0 0 60px rgba(232,117,10,0.7)); }
+}
+
+.hero-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.2rem, 6vw, 5rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.1;
+  text-shadow: 0 0 60px rgba(232,117,10,0.3);
+  position: relative;
+  z-index: 2;
+  margin-bottom: 10px;
+}
+
+.hero-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  color: var(--orange-light);
+  letter-spacing: 0.08em;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 40px;
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 auto 40px;
+  max-width: 400px;
+  position: relative;
+  z-index: 2;
+}
+.hero-divider::before, .hero-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--orange));
+}
+.hero-divider::after {
+  background: linear-gradient(to left, transparent, var(--orange));
+}
+.hero-divider span {
+  color: var(--orange);
+  font-size: 1.2rem;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  color: var(--orange-light);
+  display: block;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.82rem;
+  color: var(--cream-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(232,117,10,0.5);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+  animation: scrollHint 2s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes scrollHint {
+  0%,100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.9; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ══════════════════════════════
+   ОБЩИЕ СЕКЦИИ
+══════════════════════════════ */
+section {
+  padding: 100px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.section-tag {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border: 1px solid rgba(232,117,10,0.3);
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.section-lead {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--cream-dim);
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+/* Разделитель */
+.divider-full {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(232,117,10,0.3), transparent);
+  margin: 0;
+}
+
+/* ══════════════════════════════
+   ИСТОРИЯ — ХРОНИКА
+══════════════════════════════ */
+#history { padding-top: 120px; }
+
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--orange) 5%, var(--orange) 95%, transparent);
+}
+
+.timeline-era {
+  margin-bottom: 60px;
+}
+
+.era-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.era-title::before {
+  content: '';
+  position: absolute;
+  left: -46px;
+  width: 12px; height: 12px;
+  background: var(--orange);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--orange);
+}
+
+.era-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(232,117,10,0.4), transparent);
+}
+
+.events {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.event {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 20px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid transparent;
+  transition: background 0.2s, border 0.2s;
+  position: relative;
+}
+
+.event::before {
+  content: '';
+  position: absolute;
+  left: -40px; top: 50%;
+  transform: translateY(-50%);
+  width: 6px; height: 6px;
+  background: var(--orange-dark);
+  border-radius: 50%;
+  border: 2px solid var(--orange);
+}
+
+.event:hover {
+  background: rgba(232,117,10,0.06);
+  border-color: rgba(232,117,10,0.15);
+}
+
+.event.major {
+  background: rgba(232,117,10,0.08);
+  border-color: rgba(232,117,10,0.2);
+}
+
+.event.major::before {
+  width: 10px; height: 10px;
+  background: var(--orange);
+  box-shadow: 0 0 10px var(--orange);
+  left: -42px;
+}
+
+.event-date {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  color: var(--orange);
+  letter-spacing: 0.05em;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.event-text {
+  color: var(--cream);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.event.major .event-text {
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* ══════════════════════════════
+   РЕЛИГИЯ
+══════════════════════════════ */
+#religion {
+  background: linear-gradient(to bottom, transparent, rgba(232,117,10,0.04), transparent);
+}
+
+.religion-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+  margin-bottom: 70px;
+}
+
+.religion-intro {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--cream);
+}
+
+.religion-intro strong {
+  color: var(--orange-light);
+}
+
+.religion-symbol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px;
+  background: radial-gradient(ellipse at center, rgba(232,117,10,0.1), transparent 70%);
+  border: 1px solid rgba(232,117,10,0.2);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.religion-symbol .big-icon {
+  font-size: 72px;
+  filter: drop-shadow(0 0 20px var(--orange));
+  animation: emblemPulse 3s ease-in-out infinite;
+}
+
+.religion-symbol h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: var(--orange-light);
+}
+
+.religion-symbol p {
+  color: var(--cream-dim);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.commandments {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.commandment {
+  padding: 24px 28px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(232,117,10,0.15);
+  border-radius: 12px;
+  position: relative;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.commandment:hover {
+  transform: translateY(-3px);
+  border-color: rgba(232,117,10,0.35);
+}
+
+.commandment-num {
+  position: absolute;
+  top: -14px; left: 24px;
+  background: var(--orange);
+  color: var(--dark);
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  font-weight: 900;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.1em;
+}
+
+.commandment-text {
+  margin-top: 8px;
+  color: var(--cream);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════
+   АРМИЯ
+══════════════════════════════ */
+#army .army-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 50px;
+}
+
+.army-card {
+  padding: 36px 28px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(232,117,10,0.15);
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.army-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--orange), transparent);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+
+.army-card:hover { transform: translateY(-5px); border-color: rgba(232,117,10,0.3); }
+.army-card:hover::before { transform: scaleX(1); }
+
+.army-icon { font-size: 44px; margin-bottom: 16px; display: block; }
+
+.army-card h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--orange-light);
+  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+}
+
+.army-card p {
+  color: var(--cream-dim);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.placeholder-notice {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 28px;
+  background: rgba(232,117,10,0.06);
+  border: 1px dashed rgba(232,117,10,0.3);
+  border-radius: 10px;
+  color: rgba(232,117,10,0.7);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.placeholder-notice span { font-size: 1.5rem; }
+
+/* ══════════════════════════════
+   ЭКОНОМИКА
+══════════════════════════════ */
+#economy .eco-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 50px;
+}
+
+.eco-card {
+  padding: 30px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(232,117,10,0.15);
+  border-radius: 12px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: border-color 0.2s;
+}
+
+.eco-card:hover { border-color: rgba(232,117,10,0.3); }
+
+.eco-icon {
+  font-size: 36px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 8px var(--orange-glow));
+}
+
+.eco-info h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: var(--orange-light);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+.eco-info p {
+  color: var(--cream-dim);
+  font-size: 0.88rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════
+   ПРАВИТЕЛИ
+══════════════════════════════ */
+#rulers {
+  background: linear-gradient(to bottom, transparent, rgba(180,80,0,0.05), transparent);
+}
+
+.rulers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+.ruler-card {
+  padding: 32px 28px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(232,117,10,0.15);
+  border-radius: 16px;
+  text-align: center;
+  transition: all 0.25s;
+  position: relative;
+}
+
+.ruler-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(232,117,10,0.4);
+  box-shadow: 0 12px 40px rgba(232,117,10,0.1);
+}
+
+.ruler-icon {
+  font-size: 56px;
+  margin-bottom: 14px;
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(232,117,10,0.4));
+}
+
+.ruler-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.ruler-title {
+  font-size: 0.82rem;
+  color: var(--orange);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+  margin-bottom: 12px;
+}
+
+.ruler-period {
+  font-size: 0.88rem;
+  color: var(--cream-dim);
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+.ruler-desc {
+  font-size: 0.88rem;
+  color: var(--cream-dim);
+  line-height: 1.6;
+}
+
+.ruler-badge {
+  position: absolute;
+  top: 14px; right: 14px;
+  font-size: 0.65rem;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(232,117,10,0.15);
+  color: var(--orange);
+  border: 1px solid rgba(232,117,10,0.3);
+}
+
+/* ══════════════════════════════
+   ФУТЕР
+══════════════════════════════ */
+footer {
+  border-top: 1px solid rgba(232,117,10,0.15);
+  padding: 50px 40px 30px;
+  text-align: center;
+  position: relative;
+}
+
+.footer-logo {
+  font-size: 48px;
+  filter: drop-shadow(0 0 12px rgba(232,117,10,0.4));
+  display: block;
+  margin-bottom: 12px;
+}
+
+.footer-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  color: var(--orange-light);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.footer-motto {
+  font-style: italic;
+  color: var(--cream-dim);
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  list-style: none;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.footer-links a {
+  color: var(--cream-dim);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--orange-light); }
+
+.footer-copy {
+  font-size: 0.78rem;
+  color: rgba(245,236,215,0.25);
+}
+
+/* ══════════════════════════════
+   АНИМАЦИИ ПОЯВЛЕНИЯ
+══════════════════════════════ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+══════════════════════════════ */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  section { padding: 70px 20px; }
+  .religion-hero { grid-template-columns: 1fr; }
+  #army .army-grid { grid-template-columns: 1fr; }
+  #economy .eco-grid { grid-template-columns: 1fr; }
+  .event { grid-template-columns: 1fr; gap: 4px; }
+  .timeline { padding-left: 20px; }
+  .hero-stats { gap: 30px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     НАВИГАЦИЯ
+═══════════════════════════════ -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <span class="nav-logo-icon">🦊</span>
+    <span class="nav-logo-text">Форкотск</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#history">История</a></li>
+    <li><a href="#religion">Религия</a></li>
+    <li><a href="#army">Армия</a></li>
+    <li><a href="#economy">Экономика</a></li>
+    <li><a href="#rulers">Правители</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════
+     HERO
+═══════════════════════════════ -->
+<div id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-stripe top"></div>
+
+  <div class="hero-eyebrow">✦ Официальный портал ✦</div>
+  <div class="hero-emblem">🦊</div>
+  <h1 class="hero-title">Великая Империя<br>Форкотск</h1>
+  <p class="hero-subtitle">Основана 14 августа 2020 года</p>
+
+  <div class="hero-divider"><span>❧</span></div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">2020</span>
+      <span class="stat-label">Год основания</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Крестовых похода</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5+</span>
+      <span class="stat-label">Побед в войнах</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Императора</span>
+    </div>
+  </div>
+
+  <div class="hero-stripe bot"></div>
+  <div class="scroll-hint">↓ листать ↓</div>
+</div>
+
+<div class="divider-full"></div>
+
+<!-- ═══════════════════════════════
+     ИСТОРИЯ
+═══════════════════════════════ -->
+<section id="history">
+  <div class="section-header fade-in">
+    <div class="section-tag">📜 Летопись</div>
+    <h2 class="section-title">История Форкотска</h2>
+    <p class="section-lead">От Республики Кошеон до Великой Империи — путь длиной в годы крови, побед и веры</p>
+  </div>
+
+  <div class="timeline fade-in">
+
+    <!-- Эпоха Кошеона -->
+    <div class="timeline-era">
+      <div class="era-title">Эпоха Республики Кошеон · 2018–2020</div>
+      <div class="events">
+        <div class="event major">
+          <span class="event-date">24.10.2018</span>
+          <span class="event-text">⚑ Основание Республики Кошеон — начало великой истории</span>
+        </div>
+        <div class="event">
+          <span class="event-date">18.11.2018</span>
+          <span class="event-text">Начало войны с Империей Собак</span>
+        </div>
+        <div class="event">
+          <span class="event-date">08.12.2018</span>
+          <span class="event-text">Республика Кошеон вступает в СГИ</span>
+        </div>
+        <div class="event">
+          <span class="event-date">11.12.2018</span>
+          <span class="event-text">Конец войны с Собаками — подписан мирный договор</span>
+        </div>
+        <div class="event">
+          <span class="event-date">20.01.2019</span>
+          <span class="event-text">Реформация, создание парламента</span>
+        </div>
+        <div class="event">
+          <span class="event-date">17.02.2019</span>
+          <span class="event-text">Принятие единализма</span>
+        </div>
+        <div class="event">
+          <span class="event-date">08.03.2019</span>
+          <span class="event-text">Удачный набег на Империю Хомяков</span>
+        </div>
+        <div class="event">
+          <span class="event-date">17.03.2019</span>
+          <span class="event-text">Республика Енотов входит в состав Кошеона</span>
+        </div>
+        <div class="event major">
+          <span class="event-date">24.05.2019</span>
+          <span class="event-text">⚑ Переформирование Республики Кошеон в Кошеонскую Империю</span>
+        </div>
+        <div class="event">
+          <span class="event-date">26.05.2019</span>
+          <span class="event-text">Начало войны с Драконами</span>
+        </div>
+        <div class="event">
+          <span class="event-date">04.06.2019</span>
+          <span class="event-text">Окончательная победа над Драконами</span>
+        </div>
+        <div class="event">
+          <span class="event-date">07.06.2019</span>
+          <span class="event-text">Присоединение Южных Котовцев</span>
+        </div>
+        <div class="event">
+          <span class="event-date">09.09.2019</span>
+          <span class="event-text">Присоединение Королевства Лягушарий</span>
+        </div>
+        <div class="event">
+          <span class="event-date">17.09.2019</span>
+          <span class="event-text">Падение ДСФСР, создание СНГ</span>
+        </div>
+        <div class="event">
+          <span class="event-date">31.10.2019</span>
+          <span class="event-text">Начало активной торговли с Австро-Гусией</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Эпоха Форкотска -->
+    <div class="timeline-era">
+      <div class="era-title">Основание Форкотска · 2020</div>
+      <div class="events">
+        <div class="event major">
+          <span class="event-date">14.08.2020</span>
+          <span class="event-text">🦊 Основание Форкотска — рождение империи</span>
+        </div>
+        <div class="event">
+          <span class="event-date">15.08.2020</span>
+          <span class="event-text">Вступление в РПД</span>
+        </div>
+        <div class="event">
+          <span class="event-date">17–18.08.2020</span>
+          <span class="event-text">Союзы с Францыей и Гусеславией</span>
+        </div>
+        <div class="event">
+          <span class="event-date">25.08.2020</span>
+          <span class="event-text">Принятие РПЖианства</span>
+        </div>
+        <div class="event">
+          <span class="event-date">06.10.2020</span>
+          <span class="event-text">Принятие Свидетелей Таролеповых, отказ от РПЖианства</span>
+        </div>
+        <div class="event">
+          <span class="event-date">06.11.2020</span>
+          <span class="event-text">Создание гимна Форкотска</span>
+        </div>
+        <div class="event">
+          <span class="event-date">09.11.2020</span>
+          <span class="event-text">Создание Собора</span>
+        </div>
+        <div class="event">
+          <span class="event-date">17.11.2020</span>
+          <span class="event-text">Создание флага Форкотска</span>
+        </div>
+        <div class="event">
+          <span class="event-date">04.12.2020</span>
+          <span class="event-text">Создание герба Форкотска</span>
+        </div>
+        <div class="event">
+          <span class="event-date">13.12.2020</span>
+          <span class="event-text">Принятие Конституции Форкотска</span>
+        </div>
+        <div class="event">
+          <span class="event-date">21.12.2020</span>
+          <span class="event-text">Выборы в Парламент: победа ИЕКП (61%)</span>
+        </div>
+        <div class="event">
+          <span class="event-date">25.12.2020</span>
+          <span class="event-text">Нападение на Парламент</span>
+        </div>
+        <div class="event">
+          <span class="event-date">27.12.2020</span>
+          <span class="event-text">Подпись Мяотской Конвенции</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Эпоха Владислава I -->
+    <div class="timeline-era">
+      <div class="era-title">Правление Владислава I · 2021</div>
+      <div class="events">
+        <div class="event major">
+          <span class="event-date">29.06.2021</span>
+          <span class="event-text">👑 Начало правления Владислава I</span>
+        </div>
+        <div class="event">
+          <span class="event-date">20.07.2021</span>
+          <span class="event-text">Вторые выборы в Парламент: победа ОФФ (53%)</span>
+        </div>
+        <div class="event">
+          <span class="event-date">14.08.2021</span>
+          <span class="event-text">Первый Государственный Праздник</span>
+        </div>
+        <div class="event">
+          <span class="event-date">29.08.2021</span>
+          <span class="event-text">Папой Форкотским становится Дмитрий II</span>
+        </div>
+        <div class="event">
+          <span class="event-date">13.09.2021</span>
+          <span class="event-text">⚔️ Первый Крестовый Поход</span>
+        </div>
+        <div class="event">
+          <span class="event-date">22.09.2021</span>
+          <span class="event-text">Основание Хайфорка</span>
+        </div>
+        <div class="event">
+          <span class="event-date">25–27.09.2021</span>
+          <span class="event-text">⚔️ Великая Кошачья Война — победа Форкотска</span>
+        </div>
+        <div class="event major">
+          <span class="event-date">17.10.2021</span>
+          <span class="event-text">✝ Смерть Владислава I. Временное правление Алексея Котова</span>
+        </div>
+        <div class="event major">
+          <span class="event-date">01.11.2021</span>
+          <span class="event-text">👑 Алексей Котов становится Императором — полное изменение Конституции</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Эпоха Алексея Котова -->
+    <div class="timeline-era">
+      <div class="era-title">Правление Алексея Котова · 2022–2023</div>
+      <div class="events">
+        <div class="event">
+          <span class="event-date">07.01.2022</span>
+          <span class="event-text">Папой Форкотским становится Михаил I</span>
+        </div>
+        <div class="event">
+          <span class="event-date">20.01.2022</span>
+          <span class="event-text">Выборы в Великий Форкотский Совет</span>
+        </div>
+        <div class="event">
+          <span class="event-date">20–23.03.2022</span>
+          <span class="event-text">⚔️ Война с АПМ — победа Форкотска</span>
+        </div>
+        <div class="event">
+          <span class="event-date">28.03.2022</span>
+          <span class="event-text">Создание Банк-бота</span>
+        </div>
+        <div class="event">
+          <span class="event-date">19.05.2022</span>
+          <span class="event-text">Военная спецоперация в Морактаре</span>
+        </div>
+        <div class="event">
+          <span class="event-date">25.09.2022</span>
+          <span class="event-text">⚔️ Второй Крестовый Поход</span>
+        </div>
+        <div class="event">
+          <span class="event-date">01.11.2022</span>
+          <span class="event-text">🔥 Первая форкотская революция</span>
+        </div>
+        <div class="event">
+          <span class="event-date">26.03.2023</span>
+          <span class="event-text">⚔️ Третий Крестовый Поход</span>
+        </div>
+        <div class="event">
+          <span class="event-date">08.05.2023</span>
+          <span class="event-text">Подписание Хайфоркского Пакта</span>
+        </div>
+        <div class="event">
+          <span class="event-date">16.07.2023</span>
+          <span class="event-text">Реформа армии, регистрация ЧВК Утюг</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider-full"></div>
+
+<!-- ═══════════════════════════════
+     РЕЛИГИЯ
+═══════════════════════════════ -->
+<section id="religion">
+  <div class="section-header fade-in">
+    <div class="section-tag">✝ Вера</div>
+    <h2 class="section-title">Свидетели Таролеповых</h2>
+    <p class="section-lead">Государственная религия Форкотска, принятая 6 октября 2020 года</p>
+  </div>
+
+  <div class="religion-hero fade-in">
+    <div class="religion-intro">
+      <p>Свидетели Таролеповых — официальная религия Великой Империи Форкотск. Верующие убеждены, что основное формирование нашего мира произошло в <strong>Таролепском периоде</strong> — благодаря великому богу <strong>Керасу</strong>.</p>
+      <br>
+      <p>Вера пришла в Форкотск в октябре 2020 года, сменив РПЖианство. С тех пор Собор является священным местом государства, а Папа Форкотский — духовным лидером империи.</p>
+      <br>
+      <p>Особое место в вере занимает <strong>вишня</strong> — священный плод, символ процветания и благосклонности Кераса.</p>
+    </div>
+    <div class="religion-symbol">
+      <span class="big-icon">✝</span>
+      <h3>Бог Керас</h3>
+      <p>Творец Таролепского периода<br>Владыка бесконечного могущества</p>
+      <br>
+      <div style="font-size:32px">🍒</div>
+      <p style="margin-top:8px">Вишня — священный плод</p>
+    </div>
+  </div>
+
+  <div class="section-header fade-in" style="margin-bottom:30px">
+    <div class="section-tag">📖 Заповеди</div>
+    <h3 class="section-title" style="font-size:1.8rem">Пять Заповедей</h3>
+  </div>
+
+  <div class="commandments fade-in">
+    <div class="commandment">
+      <div class="commandment-num">Заповедь I</div>
+      <p class="commandment-text">Всё, что не признало Свидетелей Таролеповых, должно их признать — мирным путём или путём крови. Сознательно отвергшие веру будут уничтожены. Признавшие — под защитой.</p>
+    </div>
+    <div class="commandment">
+      <div class="commandment-num">Заповедь II</div>
+      <p class="commandment-text">Запрещено критиковать правление Кераса в Таролепе. Керас обладает бесконечным могуществом — ему обязаны верить все.</p>
+    </div>
+    <div class="commandment">
+      <div class="commandment-num">Заповедь III</div>
+      <p class="commandment-text">Копите деньги и ресурсы. Если кто-то во имя Кераса попросит их — отдайте. Но лишь если просит искренне. Лжецов ждёт небесная кара.</p>
+    </div>
+    <div class="commandment">
+      <div class="commandment-num">Заповедь IV</div>
+      <p class="commandment-text">Вишня — священная еда. Для процветания необходимо её выращивать. Обидевшему вишню не видать богатства.</p>
+    </div>
+    <div class="commandment">
+      <div class="commandment-num">Заповедь V</div>
+      <p class="commandment-text">Собор — священное место. Неподобающее поведение в Соборе будет строго казариться без исключений.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider-full"></div>
+
+<!-- ═══════════════════════════════
+     АРМИЯ
+═══════════════════════════════ -->
+<section id="army">
+  <div class="section-header fade-in">
+    <div class="section-tag">⚔️ Сила</div>
+    <h2 class="section-title">Вооружённые Силы</h2>
+    <p class="section-lead">Армия Форкотска прошла через крестовые походы, войны и революции</p>
+  </div>
+
+  <div class="army-grid fade-in">
+    <div class="army-card">
+      <span class="army-icon">⚔️</span>
+      <h3>Регулярная Армия</h3>
+      <p>Основа вооружённых сил империи. Прошла реформу в июле 2023 года.</p>
+    </div>
+    <div class="army-card">
+      <span class="army-icon">🔱</span>
+      <h3>ЧВК «Утюг»</h3>
+      <p>Частная военная компания, зарегистрированная 16 июля 2023 года в ходе военной реформы.</p>
+    </div>
+    <div class="army-card">
+      <span class="army-icon">✝</span>
+      <h3>Крестоносцы</h3>
+      <p>Элитные части, участвовавшие в трёх Крестовых Походах во имя веры Свидетелей Таролеповых.</p>
+    </div>
+  </div>
+
+  <div class="placeholder-notice fade-in">
+    <span>📋</span>
+    <span>Раздел в разработке — здесь появятся подробные данные о составе армии, вооружении и боевых достижениях</span>
+  </div>
+</section>
+
+<div class="divider-full"></div>
+
+<!-- ═══════════════════════════════
+     ЭКОНОМИКА
+═══════════════════════════════ -->
+<section id="economy">
+  <div class="section-header fade-in">
+    <div class="section-tag">💰 Казна</div>
+    <h2 class="section-title">Экономика Империи</h2>
+    <p class="section-lead">Торговля, банковская система и ресурсы Форкотска</p>
+  </div>
+
+  <div class="eco-grid fade-in">
+    <div class="eco-card">
+      <span class="eco-icon">🏦</span>
+      <div class="eco-info">
+        <h3>Банк-бот</h3>
+        <p>Создан 28 марта 2022 года. Обеспечивает финансовые операции и хранение казны империи.</p>
+      </div>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">🤝</span>
+      <div class="eco-info">
+        <h3>Внешняя торговля</h3>
+        <p>С 31 октября 2019 года — активная торговля с Австро-Гусией. Форкотск открыт для союзников.</p>
+      </div>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">🍒</span>
+      <div class="eco-info">
+        <h3>Священное производство</h3>
+        <p>Выращивание вишни — религиозный и экономический долг каждого гражданина Форкотска.</p>
+      </div>
+    </div>
+    <div class="eco-card">
+      <span class="eco-icon">📊</span>
+      <div class="eco-info">
+        <h3>Монетизация</h3>
+        <p>Государство развивает системы монетизации и управления ресурсами внутри сообщества.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="placeholder-notice fade-in">
+    <span>📋</span>
+    <span>Подробные данные об экономике, валюте и торговых партнёрах будут добавлены позже</span>
+  </div>
+</section>
+
+<div class="divider-full"></div>
+
+<!-- ═══════════════════════════════
+     ПРАВИТЕЛИ
+═══════════════════════════════ -->
+<section id="rulers">
+  <div class="section-header fade-in">
+    <div class="section-tag">👑 Власть</div>
+    <h2 class="section-title">Правители Форкотска</h2>
+    <p class="section-lead">Те, кто вёл империю сквозь войны, реформы и революции</p>
+  </div>
+
+  <div class="rulers-grid fade-in">
+    <div class="ruler-card">
+      <div class="ruler-badge">I Император</div>
+      <span class="ruler-icon">👑</span>
+      <div class="ruler-name">Владислав I</div>
+      <div class="ruler-title">Император Форкотска</div>
+      <div class="ruler-period">29 июня 2021 — 17 октября 2021</div>
+      <p class="ruler-desc">Первый Император Форкотска. Провёл вторые парламентские выборы, организовал Первый Крестовый Поход и победу в Великой Кошачьей Войне. Погиб при невыясненных обстоятельствах.</p>
+    </div>
+
+    <div class="ruler-card">
+      <div class="ruler-badge">II Император</div>
+      <span class="ruler-icon">🦊</span>
+      <div class="ruler-name">Алексей Котов</div>
+      <div class="ruler-title">Представитель Истории → Император</div>
+      <div class="ruler-period">17 октября 2021 — настоящее время</div>
+      <p class="ruler-desc">Начал как временный правитель после смерти Владислава I. 1 ноября 2021 года принял титул Императора, полностью изменил Конституцию и распустил Парламент. Провёл три Крестовых Похода.</p>
+    </div>
+
+    <div class="ruler-card">
+      <span class="ruler-icon">✝</span>
+      <div class="ruler-name">Дмитрий II</div>
+      <div class="ruler-title">Папа Форкотский</div>
+      <div class="ruler-period">29 августа 2021 — январь 2022</div>
+      <p class="ruler-desc">Духовный лидер Форкотска. Возглавлял церковь Свидетелей Таролеповых в период активных военных походов.</p>
+    </div>
+
+    <div class="ruler-card">
+      <span class="ruler-icon">⛪</span>
+      <div class="ruler-name">Михаил I</div>
+      <div class="ruler-title">Папа Форкотский</div>
+      <div class="ruler-period">7 января 2022 — настоящее время</div>
+      <p class="ruler-desc">Действующий духовный глава империи. Возглавляет церковь в период Второго и Третьего Крестовых Походов.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     ФУТЕР
+═══════════════════════════════ -->
+<footer>
+  <span class="footer-logo">🦊</span>
+  <div class="footer-name">Великая Империя Форкотск</div>
+  <div class="footer-motto">«Во имя Кераса и процветания вишнёвых садов»</div>
+  <ul class="footer-links">
+    <li><a href="#history">История</a></li>
+    <li><a href="#religion">Религия</a></li>
+    <li><a href="#army">Армия</a></li>
+    <li><a href="#economy">Экономика</a></li>
+    <li><a href="#rulers">Правители</a></li>
+  </ul>
+  <div class="footer-copy">Основано 14 августа 2020 · Официальный портал Великой Империи Форкотск</div>
+</footer>
+
+<script>
+// Анимация появления элементов при скролле
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 120);
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Активный пункт навигации
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current
+      ? 'var(--orange-light)' : '';
+  });
+});
+</script>
+
+</body>
+</html>
